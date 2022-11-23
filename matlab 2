@@ -1,0 +1,91 @@
+%bisection method
+clc
+clear all
+
+a = 5;
+b = 6;
+c = (a + b)/2;
+tol = 0.001;
+
+
+
+x = 5:6;
+f = @(x) x.^2 - 29;
+
+plot(x,f(x))    %plot(x-axis,y-axis)
+grid            %puts grids in graph
+
+while abs(f(c))>tol
+    if f(a)*f(c)<0
+        b=c;
+    else
+        a=c;
+    end
+    c=(a+b)/2;
+end
+
+fprintf('Root = %f',c)
+
+ % FIXED POINT ITERATION
+
+clc
+clear all
+
+i=0;
+N=10;
+x0=1;
+tol=0.001;
+
+x=1:0.1:2;
+g=@(x) tan(x)/4;
+
+while i<=N
+    x1=g(x0);
+    if abs(x1-x0)<=tol
+        fprintf('Solution of the given eqn. is %f',x1)
+        break
+    end
+    x0=x1;
+    i=i+1;
+end
+
+if i==N
+    fprintf('Solution not found')
+end
+
+%langrange method
+format short 
+clear all;
+clc
+x=[110 130 160 190];
+y=[10.8 8.1 5.5 4.8];
+X=input ('Enter the value of X:');
+for i= 1:size(x,2)
+    x1=x;
+    x1(i)=[];
+    l(i)=prod(X-x1)./prod(x(i)-x1)
+end
+Y=sum(l.*y);
+fprintf('%f',Y);
+
+%Newtons Divided Difference
+format short 
+clear all;
+clc
+x=[0 1 2 4 5 6];
+y=[1 14 15 5 6 19];
+X=input('Input the value of X:');
+n=size(x,2); %no of data sets
+DD=zeros(n,n);%nXn zero matrix
+DD(:,1)=y';%first column of table
+for j=2:n
+    for i=1:(n-j+1)
+        num= DD(i+1,j-1)-DD(i,j-1);
+        den=DD(x(i+j-1)-x(i));
+        DD(i,j)=num./den;
+    end
+end
+for i=1:size(x,2)-1
+    P(i)= prod(X-x(:,1:i)).*DD(1,i+1);
+end
+y=y(1)+sum(P); 
