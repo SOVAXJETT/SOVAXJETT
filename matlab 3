@@ -1,0 +1,63 @@
+%Newton Rapson Method
+format short
+clear all;
+
+clc
+clear all
+syms x;     %enables differentiation
+f=@(x)x.^2-17;
+x0=1;
+tol=10^(-5);
+i=1;
+n=10;
+df=inline(diff(f(x)));
+while i<=n
+    x1=x0-(f(x0)/df(x0));
+    if abs(x0-x1)<tol
+        fprintf('The root is %f',x1)
+        break;
+    else
+        x0=x1;
+    end
+i=i+1;
+end
+
+% SECANT'S METHOD
+
+clc
+clear all
+syms x;
+f=@(x)x.^2-17;
+x0=0;
+x1=1;
+tol=10^(-5);
+i=1;
+n=10;
+while(i<=n)
+    x2=x1-((x1-x0)/(f(x1)-f(x0))*f(x1));
+    if abs((x2-x1)/x2)<tol
+        fprintf('The root is %f',x2)
+        break;
+    else
+        x0=x1;
+        x1=x2;
+    end
+i=i+1;
+end
+
+% LU
+
+clc
+clear all
+
+A = [2,-1,1;3,3,9;3,3,5];
+m = size(A,1); n = size(A,2);
+L = eye(m); % eye(m) -> IDENTITY MATRIX of Order m x m
+U = A;      % eye(m,n) -> IDENTITY MATRIX of Order m x n
+
+for j=1:n-1
+    for i=j+1:m
+        L(i,j) = U(i,j)/U(j,j); %
+        U(i,:) = U(i,:) - L(i,j)*U(j,:);  % Stage : j
+    end
+end
