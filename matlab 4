@@ -38,7 +38,7 @@ clc
 Info=[ 6 3 2 ;6 4 3; 20 15 12];
 b=[6;0;0];
 A=[Info b];
-for i=1:size(A,i) %no of rows ---if (A,2) then no of columns
+for i=1:size(A,1) %no of rows ---if (A,2) then no of columns
     for j=i+1:size(A,1)
         key1=A(j,i)./A(i,i);
         A(j,:)=A(j,:)-key1.*A(i,:);
