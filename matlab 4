@@ -1,0 +1,80 @@
+% Power Method
+
+clc
+clear all
+
+A=[1,1,0,0;1,2,0,1;0,0,3,3;0,1,2,3];
+x0=[1;1;0;1];
+
+k0=1000;
+tol=0.001;
+j=1; N=3;
+
+while j<=N
+    y=A*x0;
+    k=max(abs(y));
+    x=(1/k)*y;
+%     if (abs(k-k0)<tol)
+%         break;
+    fprintf('largest eigen value is %f',k)
+    fprintf('corresponding eigen vector is')
+    disp(x)
+   
+    x0=x
+    k0=k;
+    j=j+1;
+end
+
+% fprintf('largest eigen value is %f',k)
+% fprintf('corresponding eigen vector is')
+% disp(x)
+
+
+%Gauss Elimination Method
+format short
+clear all;
+clc
+%Given matrix
+Info=[ 6 3 2 ;6 4 3; 20 15 12];
+b=[6;0;0];
+A=[Info b];
+for i=1:size(A,i) %no of rows ---if (A,2) then no of columns
+    for j=i+1:size(A,1)
+        key1=A(j,i)./A(i,i);
+        A(j,:)=A(j,:)-key1.*A(i,:);
+    end
+end
+x=zeros(1,size(Info,2));
+for i=size(A,i):-1:1
+    hg = sum(A(i,i+1:end-1).*x(i+1,end));
+    x(i)=(A(i,end)-hg)./A(i,i);
+end
+fprintf('Solution is %d \n', x);
+
+
+%Guass Seidal Method
+format short
+clear all;
+clc
+A=[27 6 -1; 6 15 2; 1 1 54];
+b=[85 ; 72; 110];
+maxerr=1e-5;
+x=zeros(1,size(A,1));
+err1=Inf;
+itr=0;
+while all(err1>maxerr)
+    x_old=x;
+    for i=1:size(A,1)
+        sum=0;
+        for j=1:i-1
+            sum=sum+A(i,j)*x(j);
+        end
+        for j=i+1:size(A,1)
+            sum=sum+A(i,j)*x_old(j);
+        end
+        x(i)=(1/A(i,i))*(b(i)-sum);
+    end
+    itr=itr+1;
+    y(itr,:)=x;
+    err1=abs(x_old-x);
+end
